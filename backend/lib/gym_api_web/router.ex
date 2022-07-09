@@ -19,8 +19,6 @@ defmodule GymApiWeb.Router do
 
   scope "/", GymApiWeb do
     pipe_through(:browser)
-
-    get("/", PageController, :index)
     resources("/levels", LevelController)
     resources("/exercises", ExerciseController)
   end
@@ -73,10 +71,10 @@ defmodule GymApiWeb.Router do
   scope "/", GymApiWeb do
     pipe_through([:browser, :redirect_if_user_is_authenticated])
 
+    get("/", UserSessionController, :new)
+    post("/users/log_in", UserSessionController, :create)
     get("/users/register", UserRegistrationController, :new)
     post("/users/register", UserRegistrationController, :create)
-    get("/users/log_in", UserSessionController, :new)
-    post("/users/log_in", UserSessionController, :create)
     get("/users/reset_password", UserResetPasswordController, :new)
     post("/users/reset_password", UserResetPasswordController, :create)
     get("/users/reset_password/:token", UserResetPasswordController, :edit)
@@ -86,6 +84,7 @@ defmodule GymApiWeb.Router do
   scope "/", GymApiWeb do
     pipe_through([:browser, :require_authenticated_user])
 
+    get("/manager", PageController, :index)
     get("/users/settings", UserSettingsController, :edit)
     put("/users/settings", UserSettingsController, :update)
     get("/users/settings/confirm_email/:token", UserSettingsController, :confirm_email)
