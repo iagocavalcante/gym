@@ -1,0 +1,32 @@
+<h1>Listing Exercise</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Repetition</th>
+      <th>Interval</th>
+      <th>Cadence</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for exercise <- @exercise do %>
+    <tr>
+      <td><%= exercise.name %></td>
+      <td><%= exercise.repetition %></td>
+      <td><%= exercise.interval %></td>
+      <td><%= exercise.cadence %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.exercise_path(@conn, :show, exercise) %></span>
+        <span><%= link "Edit", to: Routes.exercise_path(@conn, :edit, exercise) %></span>
+        <span><%= link "Delete", to: Routes.exercise_path(@conn, :delete, exercise), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Exercise", to: Routes.exercise_path(@conn, :new) %></span>
